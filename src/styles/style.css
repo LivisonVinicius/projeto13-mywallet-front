@@ -1,0 +1,38 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    box-sizing: border-box;
+    background: #8C11BE;
+}
+.hide{
+    display: none;
+}
+.offscreen {
+    position: absolute;
+    left: -9999px;
+}
+.valid{
+    color: limegreen;
+}
+
+.invalid {
+    color: red;
+}
+
+.errmsg {
+    background-color: lightpink;
+    color: firebrick;
+    font-weight: bold;
+    padding: 0.5rem;
+}
+
+.instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    background: #000;
+    color: #fff;
+    padding: 0.25rem;
+    position: relative;
+    bottom: -10px;
+}
