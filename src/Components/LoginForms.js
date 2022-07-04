@@ -7,6 +7,7 @@ import axios from "axios";
 export default function LoginForms() {
   const emailRef = useRef();
   const errRef = useRef();
+  const navigate = useNavigate()
 
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
@@ -29,10 +30,13 @@ export default function LoginForms() {
         { email, pwd }
       );
       const accessToken = response?.data?.accessToken;
-      const userName = response?.data?.name;
-      localStorage.setItem("userData", { userName, accessToken });
+      const userName = response?.data?.userName;
+      const objPost = {userName , accessToken}
+      localStorage.setItem("userData",JSON.stringify(objPost) );
+
       setEmail("");
       setPwd("");
+      navigate("/records");
     } catch (err) {
       if (!err?.response) {
         setErrMsg("Sem resposta do servidor");
