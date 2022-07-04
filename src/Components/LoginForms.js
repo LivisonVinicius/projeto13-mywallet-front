@@ -1,33 +1,83 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function LoginForms() {
+  const emailRef = useRef();
+  const errRef = useRef();
+
   const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const navigate = useNavigate();
-  async function submitData(event) {
-    event.preventDefault();
-    const objPost = { email: email, password: senha };
-  }
+  const [pwd, setPwd] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+
+  useEffect(() => {
+    emailRef.current.focus();
+  }, []);
+
+  useEffect(() => {
+    setErrMsg("");
+  }, [email, pwd]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/login",
+        { email, pwd }
+      );
+      const accessToken = response?.data?.accessToken;
+      const userName = response?.data?.name;
+      localStorage.setItem("userData", { userName, accessToken });
+      setEmail("");
+      setPwd("");
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("Sem resposta do servidor");
+      }
+      if (err.response?.status === 400) {
+        setErrMsg("E-mail ou senha incorretos");
+      }
+      if (err.response?.status === 401) {
+        setErrMsg("Não autorizado");
+      }
+      if (err.response?.status === 404) {
+        setErrMsg("Usuário não encontrado");
+      } else {
+        setErrMsg("Falha no login");
+      }
+      errRef.current.focus();
+    }
+  };
 
   return (
-    <Forms onSubmit={submitData}>
+    <Forms onSubmit={handleSubmit}>
+      <p
+        ref={errRef}
+        className={errMsg ? "errmsg" : "offscreen"}
+        aria-live="assertive"
+      >
+        {errMsg}
+      </p>
       <input
         type="email"
         id="email"
+        ref={emailRef}
+        autoComplete="off"
+        onChange={(e) => setEmail(e.target.value)}
         value={email}
         required
-        onChange={(e) => setEmail(e.target.value)}
         placeholder="E-mail"
       />
+
       <input
         type="password"
-        id="senha"
-        value={senha}
+        id="password"
+        onChange={(e) => setPwd(e.target.value)}
+        value={pwd}
         required
-        onChange={(e) => setSenha(e.target.value)}
         placeholder="Senha"
       />
       <button type="submit">{"Entrar"}</button>

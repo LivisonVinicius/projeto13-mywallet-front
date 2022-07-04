@@ -103,17 +103,6 @@ export default function RegisterForms() {
     }
   };
 
-  // async function submitData(event) {
-  //   event.preventDefault();
-  //   const objPost = { name: name, email: email, password: password };
-  //   const promise = axios.post("http://localhost:5000/register", objPost);
-  //   promise
-  //     .then((resp) => {
-  //       navigate("/");
-  //     })
-  //     .catch(alert(resp.response.data.message));
-  // }
-
   return (
     <Forms onSubmit={handleSubmit}>
       <p
