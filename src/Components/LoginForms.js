@@ -33,7 +33,6 @@ export default function LoginForms() {
       const userName = response?.data?.userName;
       const objPost = {userName , accessToken}
       localStorage.setItem("userData",JSON.stringify(objPost) );
-
       setEmail("");
       setPwd("");
       navigate("/records");

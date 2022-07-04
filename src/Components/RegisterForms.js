@@ -82,7 +82,6 @@ export default function RegisterForms() {
     }
     try {
       const postObj={ user, email, pwd }
-      console.log(postObj)
       const response = await axios.post(
         "http://localhost:5000/register",
         postObj
