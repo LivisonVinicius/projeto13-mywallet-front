@@ -83,7 +83,7 @@ export default function RegisterForms() {
     try {
       const postObj={ user, email, pwd }
       const response = await axios.post(
-        "http://localhost:5000/register",
+        "https://mywalletlivison.herokuapp.com/register",
         postObj
       );
       setUser("");

@@ -29,7 +29,7 @@ export default function Deposit() {
     };
     try {
       const response = await axios.post(
-        "http://localhost:5000/deposit",
+        "https://mywalletlivison.herokuapp.com/deposit",
         {
           money,
           description,

@@ -17,7 +17,7 @@ export default function Records() {
     getTransactions();
   }, []);
   function getTransactions() {
-    const promise = axios.get("http://localhost:5000/records", {
+    const promise = axios.get("https://mywalletlivison.herokuapp.com/records", {
       headers: { Authorization: `Bearer ${token.accessToken}` },
     });
     promise.then((resp) => {
